@@ -3,6 +3,7 @@ import EvaluationItem from './EvaluationItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
 import NumOneIcon from './icons/IconOne.vue'
 import NumTwoIcon from './icons/IconTwo.vue'
+import NumThreeIcon from './icons/IconThree.vue'
 import axios from 'axios'
 import { ref } from 'vue'
 const userName = ref('')
@@ -140,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <EvaluationItem>
     <template #icon>
-      <NumTwoIcon class="icon"/>
+      <NumThreeIcon class="icon"/>
     </template>
     <template #heading>Actualiser le résultat</template>
     D'abord, le numéro de cette étape devrait être un 3, donc à vous de corriger ça !<br/>
