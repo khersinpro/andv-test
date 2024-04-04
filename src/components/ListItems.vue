@@ -94,7 +94,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <br>
 
     <!-- Dynamic CSS -->
-    <span>CSS</span> 
+    <span class="floating-text">CSS</span> 
     <br>
 
     <!-- Dynamic Vuejs -->
@@ -151,4 +151,30 @@ document.addEventListener('DOMContentLoaded', () => {
 .age{
   color: blue;
 }
+
+/* Start of exercise */
+/* Floating text animation */
+@keyframes floating {
+  0% {
+    transform: translateY(0);
+  }
+  25% {
+    transform: translateY(8px);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  75% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.floating-text {
+  display: inline-block;
+  animation: floating 2s linear infinite; 
+}
+
 </style>
