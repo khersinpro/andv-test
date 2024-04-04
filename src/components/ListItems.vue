@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <br>
 
     <!-- Dynamic Vuejs -->
-    <span>VueJS</span>
+    <span v-reverse>VueJS</span>
     <br/>    
     <br/>    
 
@@ -171,7 +171,6 @@ document.addEventListener('DOMContentLoaded', () => {
     transform: translateY(0);
   }
 }
-
 .floating-text {
   display: inline-block;
   animation: floating 2s linear infinite; 
