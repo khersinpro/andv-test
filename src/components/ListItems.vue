@@ -24,6 +24,49 @@ function getUser() {
 
 const ageOfRegistered = '';
 
+/**
+ * Javascript exercise 
+ */
+
+/**
+ * Creates a typewriter effect on the given DOM element with the given text.
+ * 
+ * @param domElement - The DOM element to create the typewriter effect on.
+ * @param text - The text to type on the DOM element. Default is 'default'.
+ * @param delay - The delay in milliseconds between each character when typing and deleting. Default is 200.
+ * @param deleteDelay - The delay in milliseconds before starting to delete after the text is fully typed. Default is 2000.
+ */
+ function typeWriterEffect(domElement: HTMLElement | null, text: string = 'default', delay: number = 200, deleteDelay: number = 2000) {
+  if (!domElement || domElement instanceof HTMLElement === false) {
+    return;
+  }
+
+  let index = 0;
+  let isDeleting = false;
+
+  setInterval(() => {
+    if (!isDeleting && index < text.length) {
+      domElement.textContent += text.charAt(index);
+      index++;
+    } else if (index > 0 && domElement.textContent) {
+      isDeleting = true;
+      domElement.textContent = domElement.textContent.slice(0, index - 1);
+      index--;
+    } else {
+      isDeleting = false;
+    }
+  }, delay);
+
+  setTimeout(() => {
+    isDeleting = true;
+  }, deleteDelay);
+}
+
+// Start the typewriter effect on the animated JavaScript span when the document is fully loaded with only javascript.
+document.addEventListener('DOMContentLoaded', () => {
+  const animatedJavascriptSpan = document.getElementById('animated-javascript');
+  typeWriterEffect(animatedJavascriptSpan, 'Javascript');
+})
 </script>
 
 <template>
@@ -33,7 +76,23 @@ const ageOfRegistered = '';
     </template>
     <template #heading>Présentation</template>
 
-    Vous trouverez ci-dessous une liste de tâches de difficultés croissantes, afin d'évaluer votre maitrise de : <u>Javascript, HTML, CSS et VueJS</u>.<br/>
+    Vous trouverez ci-dessous une liste de tâches de difficultés croissantes, afin d'évaluer votre maitrise de : 
+    <!-- Dynamic javascript -->
+    <br>
+    <span id="animated-javascript"></span> 
+
+    <!-- Dynamic HTML -->
+    <br>
+    <span>HTML</span> 
+    <br>
+
+    <!-- Dynamic CSS -->
+    <span>CSS</span> 
+    <br>
+
+    <!-- Dynamic Vuejs -->
+    <span>VueJS</span>
+    <br/>    
     <br/>    
 
   </EvaluationItem>
