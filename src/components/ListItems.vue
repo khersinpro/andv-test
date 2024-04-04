@@ -6,15 +6,18 @@ import NumTwoIcon from './icons/IconTwo.vue'
 import axios from 'axios'
 import { ref } from 'vue'
 const userName = ref('')
+const userEmail = ref('')
+const userPicture = ref('')
 let activeColor = ref('green')
 
 function getUser() {
   axios.get('https://randomuser.me/api/')
   .then(function (response) {
-    const name = response.data.results[1].name;
-    userName.value = name.title + ' ' + 
-                     name.first + ' ' + 
-                     name.last;
+    const { email, picture: { thumbnail }, name } = response.data.results[0];
+
+      userName.value    = `${name.title} ${name.first} ${name.last}`;
+      userEmail.value   = email;
+      userPicture.value = thumbnail;
   })
   .catch(function (error) {
     activeColor = ref('red')
@@ -125,7 +128,14 @@ document.addEventListener('DOMContentLoaded', () => {
     En bonus, vous devrez afficher l'email et l'image au format vignette de la personne.<br/>
     <button variant="primary" v-on:click="getUser">Obtenir un nom</button>
     <br/>
-    <p :style="{color: activeColor}"> {{ userName }} </p>
+    <!-- User card -->
+    <div v-if="userName" class="user-card">
+      <img v-if="userPicture" :src="userPicture" alt="User thumbnail" class="user-thumbnail">
+      <div class="user-info">
+        <h2 :style="{color: activeColor}">{{ userName }}</h2>
+        <p v-if="userEmail">Email: {{ userEmail }}</p>
+      </div>
+    </div>
   </EvaluationItem>
 
   <EvaluationItem>
@@ -176,4 +186,27 @@ document.addEventListener('DOMContentLoaded', () => {
   animation: floating 2s linear infinite; 
 }
 
+/* User card */
+.user-card {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 5px;
+}
+.user-thumbnail {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+.user-info h2 {
+  margin: 0;
+  font-size: 1.2em;
+}
+.user-info p {
+  margin: 0;
+  color: #666;
+}
 </style>
