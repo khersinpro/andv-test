@@ -5,20 +5,30 @@ import NumOneIcon from './icons/IconOne.vue'
 import NumTwoIcon from './icons/IconTwo.vue'
 import NumThreeIcon from './icons/IconThree.vue'
 import axios from 'axios'
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 const userName = ref('')
 const userEmail = ref('')
 const userPicture = ref('')
+const userDateOfBirth = ref('')
+const userRegisteredDate = ref('')
 let activeColor = ref('green')
 
 function getUser() {
   axios.get('https://randomuser.me/api/')
   .then(function (response) {
-    const { email, picture: { thumbnail }, name } = response.data.results[0];
+    const { 
+      email, 
+      name, 
+      picture: { thumbnail }, 
+      dob: { date: dobDate }, 
+      registered: { date: regDate } 
+    } = response.data.results[0];
 
-      userName.value    = `${name.title} ${name.first} ${name.last}`;
-      userEmail.value   = email;
+      userName.value = `${name.title} ${name.first} ${name.last}`;
+      userEmail.value = email;
       userPicture.value = thumbnail;
+      userDateOfBirth.value = dobDate;
+      userRegisteredDate.value = regDate;
   })
   .catch(function (error) {
     activeColor = ref('red')
@@ -26,7 +36,29 @@ function getUser() {
   })
 }
 
-const ageOfRegistered = '';
+/**
+ * Adding computed property to calculate the age when the user registered
+ */
+ const ageOfRegistered = computed(() => {
+  if (userRegisteredDate.value && userDateOfBirth.value) {
+    const registrationDate = new Date(userRegisteredDate.value);
+    const birthDate        = new Date(userDateOfBirth.value);
+    
+    // Calculate the age without months and days
+    let age = registrationDate.getFullYear() - birthDate.getFullYear();
+
+    // Check if the birthday has already happened this year
+    const monthDifference = registrationDate.getMonth() - birthDate.getMonth();
+
+    // If the birthday has not happened yet, we need to subtract one year
+    if (monthDifference < 0 || (monthDifference === 0 && registrationDate.getDate() < birthDate.getDate())) {
+      age--;
+    }
+
+    return age;
+  }
+  return '';
+ });
 
 /**
  * Javascript exercise 
