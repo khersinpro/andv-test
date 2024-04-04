@@ -81,9 +81,16 @@ document.addEventListener('DOMContentLoaded', () => {
     <br>
     <span id="animated-javascript"></span> 
 
-    <!-- Dynamic HTML -->
+    <!-- Dynamic HTML with only html tags -->
     <br>
-    <span>HTML</span> 
+    <span>
+      <svg width="40px" height="15px">
+        <text x="0" y="15">
+          <animate attributeName="fill" values="blue;white;red" dur="3s" repeatCount="indefinite"/>
+          HTML
+        </text>
+      </svg>
+    </span>
     <br>
 
     <!-- Dynamic CSS -->
